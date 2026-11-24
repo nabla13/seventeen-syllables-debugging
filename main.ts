@@ -9,5 +9,17 @@ const haiku = [
   "silence was the bug",
 ].join("\n") + "\n";
 
+// The gate is strict: the entry must be exactly three lines and at
+// most 200 characters. Refuse to write anything that is not.
+const lines = haiku.split("\n").filter((line) => line.length > 0);
+if (lines.length !== 3) {
+  console.error(`haiku must be exactly 3 lines, got ${lines.length}`);
+  process.exit(1);
+}
+if (haiku.length > 200) {
+  console.error(`haiku must be at most 200 characters, got ${haiku.length}`);
+  process.exit(1);
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", haiku, "utf8");
